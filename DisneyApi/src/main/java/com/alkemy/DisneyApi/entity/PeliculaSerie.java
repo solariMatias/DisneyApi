@@ -39,4 +39,6 @@ public class PeliculaSerie {
 	@ManyToOne
 	@JoinColumn(name = "idGenero")
 	private Genero genero;
+	
+	
 }

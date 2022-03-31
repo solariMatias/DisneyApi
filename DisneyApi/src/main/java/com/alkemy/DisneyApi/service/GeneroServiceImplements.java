@@ -24,4 +24,9 @@ public class GeneroServiceImplements implements GeneroService {
 		return this.generoRepo.save(genero);
 	}
 
+	@Override
+	public void delete(Long id) {
+		this.generoRepo.deleteById(id);
+	}
+
 }
