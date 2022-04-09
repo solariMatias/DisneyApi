@@ -14,11 +14,11 @@ import com.alkemy.DisneyApi.entity.Genero;
 import com.alkemy.DisneyApi.service.GeneroService;
 
 @RestController
-@RequestMapping("/genre")
+@RequestMapping("/genres")
 public class GeneroRestController {
 
 	@Autowired
-	GeneroService generoService;
+	private GeneroService generoService;
 
 	@GetMapping()
 	public List<Genero> listaGenero() {

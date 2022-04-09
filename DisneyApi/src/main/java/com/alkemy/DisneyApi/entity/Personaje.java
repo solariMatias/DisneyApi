@@ -2,16 +2,24 @@ package com.alkemy.DisneyApi.entity;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "Personaje")
+@JsonIdentityInfo(
+		   generator = ObjectIdGenerators.PropertyGenerator.class,
+		   property = "idPersonaje")
 public class Personaje {
 	
 	@Id
@@ -25,10 +33,9 @@ public class Personaje {
 	
 	
 	@ManyToMany(mappedBy = "personajesEnPeliculaSerie")
-	
 	private List<PeliculaSerie> peliculaSerie;
 
-
+	
 	public Long getIdPersonaje() {
 		return idPersonaje;
 	}

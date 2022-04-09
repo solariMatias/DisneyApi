@@ -19,6 +19,7 @@ public class Genero {
 	private String nombre;
 	private String imagen;
 	
+	
 	public Long getIdGenero() {
 		return idGenero;
 	}
@@ -37,6 +38,4 @@ public class Genero {
 	public void setImagen(String imagen) {
 		this.imagen = imagen;
 	}
-	
-	
 }

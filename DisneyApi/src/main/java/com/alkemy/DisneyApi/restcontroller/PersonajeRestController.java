@@ -18,7 +18,7 @@ import com.alkemy.DisneyApi.service.PersonajeService;
 public class PersonajeRestController {
 
 	@Autowired
-	PersonajeService personajeService;
+	private PersonajeService personajeService;
 
 	@GetMapping()
 	public List<Personaje> listaPersonajes() {
