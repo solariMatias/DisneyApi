@@ -1,11 +1,13 @@
 package com.alkemy.DisneyApi.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alkemy.DisneyApi.entity.Personaje;
+import com.alkemy.DisneyApi.exception.ResourceNotFoundException;
 import com.alkemy.DisneyApi.projection.PersonajeProjection;
 import com.alkemy.DisneyApi.repository.PersonajeRepository;
 
@@ -27,14 +29,24 @@ public class PersonajeServiceImplements implements PersonajeService {
 
 	@Override
 	public Personaje update(Long id, Personaje personaje) {
-		Personaje personajeToUpdate = this.personajeRepo.findById(id).orElse(null);
-		personajeToUpdate.setAllData(personaje);
-		return personajeToUpdate;
+		Optional<Personaje> personajeToUpdate = this.personajeRepo.findById(id);
+		if (personajeToUpdate.isPresent()) {
+			personajeToUpdate.get().setAllData(personaje);
+			return personajeToUpdate.get();
+		} else {
+			throw new ResourceNotFoundException("Personaje", "Id", id);
+		}
+
 	}
 
 	@Override
 	public void delete(Long id) {
-		this.personajeRepo.deleteById(id);
+		if (exist(id)) {
+			this.personajeRepo.deleteById(id);
+		} else {
+			throw new ResourceNotFoundException("Personaje", "Id", id);
+		}
+
 	}
 
 	@Override
@@ -44,22 +56,39 @@ public class PersonajeServiceImplements implements PersonajeService {
 
 	@Override
 	public List<PersonajeProjection> searchPorNombre(String nombre) {
-		return this.personajeRepo.searchPersonajeByNombre(nombre);
+		List<PersonajeProjection> personajesBuscados = this.personajeRepo.findPersonajeByNombre(nombre);
+		if (!personajesBuscados.isEmpty()) {
+			return personajesBuscados;
+		} else {
+			throw new ResourceNotFoundException("Personaje", "name", nombre);
+		}
+
+	}
+
+	@Override
+	public List<PersonajeProjection> searchPorEdad(int edad) {
+		List<PersonajeProjection> personajesBuscados = this.personajeRepo.findPersonajeByEdad(edad);
+		if (!personajesBuscados.isEmpty()) {
+			return personajesBuscados;
+		} else {
+			throw new ResourceNotFoundException("Personaje", "age", edad);
+		}
+
+	}
+
+	@Override
+	public List<PersonajeProjection> searchPorIdPeliSerie(Long id) {
+		List<PersonajeProjection> personajesBuscados = this.personajeRepo.findByPeliculaSerie_IdPeliculaSerie(id);
+		if (!personajesBuscados.isEmpty()) {
+			return personajesBuscados;
+		} else {
+			throw new ResourceNotFoundException("Personaje", "id_movie", id);
+		}
 	}
 
 	@Override
 	public List<PersonajeProjection> listAllPersonajeDetails() {
 		return this.personajeRepo.findAllPersonaje();
-	}
-
-	@Override
-	public List<PersonajeProjection> searchPorEdad(int edad) {
-		return this.personajeRepo.searchPersonajeByEdad(edad);
-	}
-
-	@Override
-	public List<PersonajeProjection> searchPorIdPeliSerie(Long id) {
-		return this.personajeRepo.findByPeliculaSerieIdPeliculaSerie(id);
 	}
 
 }

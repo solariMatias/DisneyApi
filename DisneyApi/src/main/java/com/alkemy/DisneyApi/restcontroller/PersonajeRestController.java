@@ -52,7 +52,6 @@ public class PersonajeRestController {
 	
 	@GetMapping(params ="name")
 	public ResponseEntity<List<PersonajeProjection>> buscarPorNombre(@RequestParam(value="name",defaultValue = "*") String nombre){
-		System.out.println("from name method");
 		return nombre.equals("*") ? 
 				new ResponseEntity<>(this.personajeService.listAllPersonajeDetails(),HttpStatus.OK) : 
 				new ResponseEntity<>(this.personajeService.searchPorNombre(nombre),HttpStatus.OK);
@@ -60,19 +59,13 @@ public class PersonajeRestController {
 	
 	@GetMapping(params ="age")
 	public ResponseEntity<List<PersonajeProjection>> buscarPorEdad(@RequestParam(value="age",defaultValue = "0") int edad){
-		System.out.println("from age method");
 		return edad == 0? 
 				new ResponseEntity<>(this.personajeService.listAllPersonajeDetails(),HttpStatus.OK) : 
 				new ResponseEntity<>(this.personajeService.searchPorEdad(edad),HttpStatus.OK);
 	}
 	
 	@GetMapping(params ="movies")
-	public ResponseEntity<List<PersonajeProjection>> buscarPorIdPeliSerie(@RequestParam(value="idMovie",defaultValue = "0") Long id){
-		System.out.println("from peliserie method");
-		System.out.println(id);
-		id = (long) 7;
-		System.out.println(this.personajeService.searchPorIdPeliSerie(id));
-		
+	public ResponseEntity<List<PersonajeProjection>> buscarPorIdPeliSerie(@RequestParam(value="movies",defaultValue = "0") Long id){
 		return id == 0? 
 				new ResponseEntity<>(this.personajeService.listAllPersonajeDetails(),HttpStatus.OK) : 
 				new ResponseEntity<>(this.personajeService.searchPorIdPeliSerie(id),HttpStatus.OK);

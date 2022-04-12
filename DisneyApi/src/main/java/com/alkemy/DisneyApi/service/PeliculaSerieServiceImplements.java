@@ -9,7 +9,7 @@ import com.alkemy.DisneyApi.entity.PeliculaSerie;
 import com.alkemy.DisneyApi.repository.PeliculaSerieRepository;
 
 @Service
-public class PeliculaSerieServiceImplements implements PeliculaSerieService{
+public class PeliculaSerieServiceImplements implements PeliculaSerieService {
 
 	@Autowired
 	PeliculaSerieRepository peliculaSerieRepo;
@@ -39,7 +39,7 @@ public class PeliculaSerieServiceImplements implements PeliculaSerieService{
 	@Override
 	public void delete(Long id) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
@@ -47,6 +47,5 @@ public class PeliculaSerieServiceImplements implements PeliculaSerieService{
 		// TODO Auto-generated method stub
 		return false;
 	}
-	
-	
+
 }

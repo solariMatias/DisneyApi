@@ -16,15 +16,10 @@ public interface PersonajeRepository extends CrudRepository<Personaje, Long> {
 	@Query("SELECT p.imagen as imagen, p.nombre as nombre FROM Personaje p")
 	public List<PersonajeProjection> findAllPersonaje();
 
-	public List<PersonajeProjection> searchPersonajeByNombre(@Param("nombre") String nombre);
+	public List<PersonajeProjection> findPersonajeByNombre(@Param("nombre") String nombre);
 
-	public List<PersonajeProjection> searchPersonajeByEdad(@Param("edad") int edad);
+	public List<PersonajeProjection> findPersonajeByEdad(@Param("edad") int edad);
 
-//	@Query("SELECT p.imagen as imagen, p.nombre as nombre "
-//			+ "FROM Personaje p "
-//			+ "JOIN p.personaje_en_peli_series pps"
-//			
-//			+ "WHERE pps.id_personaje =:idPeliSerie")
-	public List<PersonajeProjection> findByPeliculaSerieIdPeliculaSerie(@Param("idPeliculaSerie") Long id);
+	public List<PersonajeProjection> findByPeliculaSerie_IdPeliculaSerie(@Param("idPeliculaSerie") Long id);
 
 }
