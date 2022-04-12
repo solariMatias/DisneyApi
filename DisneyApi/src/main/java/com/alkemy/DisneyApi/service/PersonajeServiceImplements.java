@@ -1,12 +1,12 @@
 package com.alkemy.DisneyApi.service;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alkemy.DisneyApi.entity.Personaje;
+import com.alkemy.DisneyApi.projection.PersonajeProjection;
 import com.alkemy.DisneyApi.repository.PersonajeRepository;
 
 @Service
@@ -22,17 +22,14 @@ public class PersonajeServiceImplements implements PersonajeService {
 
 	@Override
 	public Personaje save(Personaje personaje) {
-		if(personaje.getIdPersonaje()!=null) {
-			System.out.println("entro primer if");
-			this.personajeRepo.save(personaje);
-			System.out.println("retornando" + personaje.getPeliculaSerie());
-			return personajeRepo.findById(personaje.getIdPersonaje()).orElse(null);
-		}
-		else {
-			System.out.println("entro segundo if");
-			return this.personajeRepo.save(personaje);
-		}
-		
+		return personajeRepo.save(personaje);
+	}
+
+	@Override
+	public Personaje update(Long id, Personaje personaje) {
+		Personaje personajeToUpdate = this.personajeRepo.findById(id).orElse(null);
+		personajeToUpdate.setAllData(personaje);
+		return personajeToUpdate;
 	}
 
 	@Override
@@ -43,6 +40,26 @@ public class PersonajeServiceImplements implements PersonajeService {
 	@Override
 	public boolean exist(Long id) {
 		return this.personajeRepo.existsById(id);
+	}
+
+	@Override
+	public List<PersonajeProjection> searchPorNombre(String nombre) {
+		return this.personajeRepo.searchPersonajeByNombre(nombre);
+	}
+
+	@Override
+	public List<PersonajeProjection> listAllPersonajeDetails() {
+		return this.personajeRepo.findAllPersonaje();
+	}
+
+	@Override
+	public List<PersonajeProjection> searchPorEdad(int edad) {
+		return this.personajeRepo.searchPersonajeByEdad(edad);
+	}
+
+	@Override
+	public List<PersonajeProjection> searchPorIdPeliSerie(Long id) {
+		return this.personajeRepo.findByPeliculaSerieIdPeliculaSerie(id);
 	}
 
 }

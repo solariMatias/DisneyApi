@@ -18,21 +18,15 @@ import javax.persistence.Table;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.format.annotation.DateTimeFormat.ISO;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "PeliculaSerie")
-@JsonIdentityInfo(
-		   generator = ObjectIdGenerators.PropertyGenerator.class,
-		   property = "idPeliculaSerie"
-		   )
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPeliculaSerie")
 
 public class PeliculaSerie {
-	
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY, generator = "native")
 	private Long idPeliculaSerie;
@@ -41,18 +35,16 @@ public class PeliculaSerie {
 	@DateTimeFormat(iso = ISO.DATE)
 	private LocalDate fechaCreacion;
 	private short calificacion;
-	
-	@ManyToMany(cascade = CascadeType.MERGE,fetch = FetchType.EAGER)
-	@JoinTable(name = "personajeEnPeliSeries", //encontrar un mejor nombre para tabla relacional xD
-		joinColumns = @JoinColumn(name = "idPeliculaSerie"), 
-		inverseJoinColumns = @JoinColumn(name = "idPersonaje"))
+
+	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+	@JoinTable(name = "personajeEnPeliSeries", // encontrar un mejor nombre para tabla relacional xD
+			joinColumns = @JoinColumn(name = "idPeliculaSerie"), inverseJoinColumns = @JoinColumn(name = "idPersonaje"))
 	private List<Personaje> personajesEnPeliculaSerie;
 
 	@ManyToOne()
 	@JoinColumn(name = "idGenero")
 	private Genero genero;
 
-	
 	public Long getIdPeliculaSerie() {
 		return idPeliculaSerie;
 	}
@@ -108,7 +100,5 @@ public class PeliculaSerie {
 	public void setGenero(Genero genero) {
 		this.genero = genero;
 	}
-	
-	
-	
+
 }
