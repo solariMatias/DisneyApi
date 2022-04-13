@@ -17,11 +17,11 @@ public interface PersonajeService {
 
 	public boolean exist(Long idDog);
 
+	public List<PersonajeProjection> listAllPersonajeDetails();
+
 	public List<PersonajeProjection> searchPorNombre(String titulo);
 
 	public List<PersonajeProjection> searchPorEdad(int edad);
-
-	public List<PersonajeProjection> listAllPersonajeDetails();
 
 	public List<PersonajeProjection> searchPorIdPeliSerie(Long id);
 }

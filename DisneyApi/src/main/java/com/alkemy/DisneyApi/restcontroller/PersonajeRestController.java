@@ -12,15 +12,12 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.alkemy.DisneyApi.entity.Personaje;
 import com.alkemy.DisneyApi.projection.PersonajeProjection;
-import com.alkemy.DisneyApi.repository.PersonajeRepository;
 import com.alkemy.DisneyApi.service.PersonajeService;
 
-import net.bytebuddy.asm.Advice.This;
 
 @RestController
 @RequestMapping("/characters")

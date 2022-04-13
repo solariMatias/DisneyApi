@@ -22,4 +22,5 @@ public interface PersonajeRepository extends CrudRepository<Personaje, Long> {
 
 	public List<PersonajeProjection> findByPeliculaSerie_IdPeliculaSerie(@Param("idPeliculaSerie") Long id);
 
+
 }
