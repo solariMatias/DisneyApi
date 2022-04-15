@@ -10,11 +10,13 @@ import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "Personaje")
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "idPersonaje")
+@JsonIdentityReference(alwaysAsId = true)
 public class Personaje {
 
 	@Id
@@ -27,7 +29,8 @@ public class Personaje {
 	private String historia;
 
 	@ManyToMany(mappedBy = "personajesEnPeliculaSerie")
-	private List<PeliculaSerie> peliculaSerie;
+	@JsonIgnore
+	private List<Pelicula> peliculaSerie;
 
 	public Long getIdPersonaje() {
 		return idPersonaje;
@@ -77,11 +80,11 @@ public class Personaje {
 		this.historia = historia;
 	}
 
-	public List<PeliculaSerie> getPeliculaSerie() {
+	public List<Pelicula> getPeliculaSerie() {
 		return peliculaSerie;
 	}
 
-	public void setPeliculaSerie(List<PeliculaSerie> peliculaSerie) {
+	public void setPeliculaSerie(List<Pelicula> peliculaSerie) {
 		this.peliculaSerie = peliculaSerie;
 	}
 

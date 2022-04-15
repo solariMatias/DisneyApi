@@ -32,7 +32,7 @@ public class PersonajeServiceImplements implements PersonajeService {
 		Optional<Personaje> personajeToUpdate = this.personajeRepo.findById(id);
 		if (personajeToUpdate.isPresent()) {
 			personajeToUpdate.get().setAllData(personaje);
-			return personajeToUpdate.get();
+			return this.save(personajeToUpdate.get());
 		} else {
 			throw new ResourceNotFoundException("Personaje", "Id", id);
 		}
@@ -55,10 +55,10 @@ public class PersonajeServiceImplements implements PersonajeService {
 	}
 
 	@Override
-	public List<PersonajeProjection> searchPorNombre(String nombre) {
-		List<PersonajeProjection> personajesBuscados = this.personajeRepo.findPersonajeByNombre(nombre);
-		if (!personajesBuscados.isEmpty()) {
-			return personajesBuscados;
+	public List<PersonajeProjection> searchByNombre(String nombre) {
+		List<PersonajeProjection> list = this.personajeRepo.findPersonajeByNombre(nombre);
+		if (!list.isEmpty()) {
+			return list;
 		} else {
 			throw new ResourceNotFoundException("Personaje", "name", nombre);
 		}
@@ -66,10 +66,10 @@ public class PersonajeServiceImplements implements PersonajeService {
 	}
 
 	@Override
-	public List<PersonajeProjection> searchPorEdad(int edad) {
-		List<PersonajeProjection> personajesBuscados = this.personajeRepo.findPersonajeByEdad(edad);
-		if (!personajesBuscados.isEmpty()) {
-			return personajesBuscados;
+	public List<PersonajeProjection> searchByEdad(int edad) {
+		List<PersonajeProjection> list = this.personajeRepo.findPersonajeByEdad(edad);
+		if (!list.isEmpty()) {
+			return list;
 		} else {
 			throw new ResourceNotFoundException("Personaje", "age", edad);
 		}
@@ -77,10 +77,10 @@ public class PersonajeServiceImplements implements PersonajeService {
 	}
 
 	@Override
-	public List<PersonajeProjection> searchPorIdPeliSerie(Long id) {
-		List<PersonajeProjection> personajesBuscados = this.personajeRepo.findByPeliculaSerie_IdPeliculaSerie(id);
-		if (!personajesBuscados.isEmpty()) {
-			return personajesBuscados;
+	public List<PersonajeProjection> searchByIdPeliSerie(Long id) {
+		List<PersonajeProjection> list = this.personajeRepo.findByPeliculaSerie_IdPeliculaSerie(id);
+		if (!list.isEmpty()) {
+			return list;
 		} else {
 			throw new ResourceNotFoundException("Personaje", "id_movie", id);
 		}

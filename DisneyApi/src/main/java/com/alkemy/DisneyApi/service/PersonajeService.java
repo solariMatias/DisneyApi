@@ -19,9 +19,9 @@ public interface PersonajeService {
 
 	public List<PersonajeProjection> listAllPersonajeDetails();
 
-	public List<PersonajeProjection> searchPorNombre(String titulo);
+	public List<PersonajeProjection> searchByNombre(String nombre);
 
-	public List<PersonajeProjection> searchPorEdad(int edad);
+	public List<PersonajeProjection> searchByEdad(int edad);
 
-	public List<PersonajeProjection> searchPorIdPeliSerie(Long id);
+	public List<PersonajeProjection> searchByIdPeliSerie(Long id);
 }
