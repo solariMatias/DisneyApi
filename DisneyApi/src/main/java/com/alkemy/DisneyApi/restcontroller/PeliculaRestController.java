@@ -1,5 +1,6 @@
 package com.alkemy.DisneyApi.restcontroller;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -46,8 +47,10 @@ public class PeliculaRestController {
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/create")
-	public PeliculaDtos guardarPeliculaSerie(@RequestBody Pelicula peli) {
-		return convertToDto(peliSrvc.save(peli));
+	public PeliculaDtos guardarPeliculaSerie(@RequestBody PeliculaDtos peliDto) throws ParseException {
+		Pelicula movie= convertToEntity(peliDto);
+        Pelicula movieCreated = peliSrvc.save(movie);
+        return convertToDto(movieCreated);
 	}
 
 	@ResponseStatus(HttpStatus.OK)
@@ -92,6 +95,16 @@ public class PeliculaRestController {
 	private PeliculaDtos convertToDto(Pelicula movie) {
 		PeliculaDtos movieDto = modelMapper.map(movie, PeliculaDtos.class);
 		return movieDto;
+	}
+
+	private Pelicula convertToEntity(PeliculaDtos movieDto) throws ParseException {
+		Pelicula movie = modelMapper.map(movieDto, Pelicula.class);
+		if (movieDto.getId() != null) {
+			Pelicula oldMovie = peliSrvc.findById(movieDto.getId());
+			movie.setAllData(oldMovie);
+			movie.setPersonajesEnPeliculaSerie(oldMovie.getPersonajesEnPeliculaSerie());
+		}
+		return movie;
 	}
 
 }

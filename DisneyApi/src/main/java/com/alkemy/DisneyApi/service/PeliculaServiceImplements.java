@@ -89,4 +89,9 @@ public class PeliculaServiceImplements implements PeliculaService {
 		return this.peliRepo.findAllByOrderByFechaCreacionDesc();
 	}
 
+	@Override
+	public Pelicula findById(Long id) {
+		return this.peliRepo.findById(id).orElse(null);
+	}
+
 }

@@ -15,12 +15,15 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonIdentityReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "PeliculaSerie")
-@JsonIdentityReference(alwaysAsId = true)
+
+@JsonIdentityReference(alwaysAsId = false)
 public class Pelicula {
 
 	@Id
@@ -33,6 +36,7 @@ public class Pelicula {
 
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinTable(name = "personajeEnPeliSeries", joinColumns = @JoinColumn(name = "idPeliculaSerie"), inverseJoinColumns = @JoinColumn(name = "idPersonaje"))
+	@JsonIgnore
 	private List<Personaje> personajesEnPeliculaSerie;
 
 	@ManyToOne()

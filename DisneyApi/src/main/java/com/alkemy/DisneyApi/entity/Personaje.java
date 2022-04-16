@@ -16,7 +16,8 @@ import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 
 @Entity
 @Table(name = "Personaje")
-@JsonIdentityReference(alwaysAsId = true)
+
+@JsonIdentityReference(alwaysAsId = false)
 public class Personaje {
 
 	@Id

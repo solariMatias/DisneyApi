@@ -13,6 +13,8 @@ public interface PeliculaService {
 
 	public Pelicula update(Long id, Pelicula peli);
 
+	public Pelicula findById(Long id);
+
 	public void delete(Long id);
 
 	public boolean exist(Long id);
