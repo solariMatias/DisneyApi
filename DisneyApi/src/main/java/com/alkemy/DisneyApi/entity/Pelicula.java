@@ -105,6 +105,15 @@ public class Pelicula {
 		setCalificacion(peli.getCalificacion());
 	}
 	
+	public void addPersonaje(Personaje pers) {
+        this.personajesEnPeliculaSerie.add(pers);
+        pers.getPeliculaSerie().add(this);
+    }
+  
+    public void removePersonaje(Personaje pers) {
+        this.personajesEnPeliculaSerie.remove(pers);
+        pers.getPeliculaSerie().remove(this);
+    }
 	
 
 }

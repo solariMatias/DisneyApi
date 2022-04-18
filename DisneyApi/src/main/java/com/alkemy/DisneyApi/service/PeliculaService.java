@@ -29,6 +29,8 @@ public interface PeliculaService {
 
 	public List<PeliculaProjection> listAllPeliculaProjection();
 	
-	public void deletePersonajeFromPeliculaByIds(Long idPersonaje, Long idPelicula);
+	public void deletePersonajeFromMovie(Long idPersonaje, Long idPelicula);
+	
+	public void addPersonajeOnMovie(Long idPersonaje, Long idPelicula);
 
 }

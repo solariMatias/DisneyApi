@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alkemy.DisneyApi.entity.Pelicula;
+import com.alkemy.DisneyApi.entity.Personaje;
 import com.alkemy.DisneyApi.exception.ResourceNotFoundException;
 import com.alkemy.DisneyApi.projection.PeliculaProjection;
 import com.alkemy.DisneyApi.repository.PeliculaRepository;
@@ -40,7 +41,6 @@ public class PeliculaServiceImplements implements PeliculaService {
 		} else {
 			throw new ResourceNotFoundException("Pelicula", "Id", id);
 		}
-
 	}
 
 	@Override
@@ -95,13 +95,28 @@ public class PeliculaServiceImplements implements PeliculaService {
 
 	@Override
 	public Pelicula findById(Long id) {
-		return this.peliRepo.findById(id).orElse(null);
+		return this.peliRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Pelicula", "id", id));
 	}
 
 	@Override
-	public void deletePersonajeFromPeliculaByIds(Long idPersonaje, Long idPelicula) {
-		Pelicula movie = this.findById(idPelicula);
-		this.persRepo.deleteAll(movie.getPersonajesEnPeliculaSerie());
+	public void deletePersonajeFromMovie(Long idPersonaje, Long idPelicula) {
+		Optional<Pelicula> movie = peliRepo.findById(idPelicula);
+		Optional<Personaje> pers = persRepo.findById(idPersonaje);
+
+		movie.get().removePersonaje(pers.get());
+
+		this.peliRepo.save(movie.get());
+
+	}
+
+	@Override
+	public void addPersonajeOnMovie(Long idPersonaje, Long idPelicula) {
+		Optional<Pelicula> movie = peliRepo.findById(idPelicula);
+		Optional<Personaje> pers = persRepo.findById(idPersonaje);
+
+		movie.get().addPersonaje(pers.get());
+
+		this.peliRepo.save(movie.get());
 	}
 
 }

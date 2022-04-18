@@ -20,13 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alkemy.DisneyApi.dtos.PeliculaDtos;
 
 import com.alkemy.DisneyApi.entity.Pelicula;
-import com.alkemy.DisneyApi.entity.Personaje;
+
 import com.alkemy.DisneyApi.projection.PeliculaProjection;
 
 import com.alkemy.DisneyApi.service.PeliculaService;
-import com.alkemy.DisneyApi.service.PersonajeService;
 
-import org.hibernate.internal.build.AllowSysOut;
 import org.modelmapper.ModelMapper;
 
 @RestController
@@ -36,8 +34,6 @@ public class PeliculaRestController {
 	@Autowired
 	private PeliculaService peliSrvc;
 
-	@Autowired
-	private PersonajeService persSrvc;
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -95,12 +91,20 @@ public class PeliculaRestController {
 	}
 
 	@ResponseStatus(HttpStatus.OK)
-	@DeleteMapping("/{id_movie}/characters/{id_charc}")
-	public String eliminarPersonajeEnPelicula(
-			@PathVariable("id_movie") Long idPeli,
+	@GetMapping("/{id_movie}/characters/{id_charc}")
+	public String agregarPersonajeEnPelicula(@PathVariable("id_movie") Long idPeli,
 			@PathVariable("id_charc") Long idPers) {
-		this.peliSrvc.deletePersonajeFromPeliculaByIds(idPers, idPeli);
-		
+		this.peliSrvc.addPersonajeOnMovie(idPers, idPeli);
+
+		return "Personaje con id: " + idPers + " agregado en pelicula: " + idPeli;
+	}
+
+	@ResponseStatus(HttpStatus.OK)
+	@DeleteMapping("/{id_movie}/characters/{id_charc}")
+	public String eliminarPersonajeEnPelicula(@PathVariable("id_movie") Long idPeli,
+			@PathVariable("id_charc") Long idPers) {
+		this.peliSrvc.deletePersonajeFromMovie(idPers, idPeli);
+
 		return "Personaje con id: " + idPers + " eliminado de pelicula: " + idPeli;
 	}
 

@@ -27,5 +27,5 @@ public interface PersonajeService {
 
 	public List<PersonajeProjection> searchByIdPeliSerie(Long id);
 	
-
+	
 }
