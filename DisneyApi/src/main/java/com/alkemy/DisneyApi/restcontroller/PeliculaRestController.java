@@ -6,7 +6,7 @@ import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,10 +20,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alkemy.DisneyApi.dtos.PeliculaDtos;
 
 import com.alkemy.DisneyApi.entity.Pelicula;
-
+import com.alkemy.DisneyApi.entity.Personaje;
 import com.alkemy.DisneyApi.projection.PeliculaProjection;
 
 import com.alkemy.DisneyApi.service.PeliculaService;
+import com.alkemy.DisneyApi.service.PersonajeService;
 
 import org.hibernate.internal.build.AllowSysOut;
 import org.modelmapper.ModelMapper;
@@ -35,6 +36,8 @@ public class PeliculaRestController {
 	@Autowired
 	private PeliculaService peliSrvc;
 
+	@Autowired
+	private PersonajeService persSrvc;
 	@Autowired
 	private ModelMapper modelMapper;
 
@@ -48,9 +51,9 @@ public class PeliculaRestController {
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/create")
 	public PeliculaDtos guardarPeliculaSerie(@RequestBody PeliculaDtos peliDto) throws ParseException {
-		Pelicula movie= convertToEntity(peliDto);
-        Pelicula movieCreated = peliSrvc.save(movie);
-        return convertToDto(movieCreated);
+		Pelicula movie = convertToEntity(peliDto);
+		Pelicula movieCreated = peliSrvc.save(movie);
+		return convertToDto(movieCreated);
 	}
 
 	@ResponseStatus(HttpStatus.OK)
@@ -89,6 +92,16 @@ public class PeliculaRestController {
 		} else {
 			return this.peliSrvc.orderByFechaDESC();
 		}
+	}
+
+	@ResponseStatus(HttpStatus.OK)
+	@DeleteMapping("/{id_movie}/characters/{id_charc}")
+	public String eliminarPersonajeEnPelicula(
+			@PathVariable("id_movie") Long idPeli,
+			@PathVariable("id_charc") Long idPers) {
+		this.peliSrvc.deletePersonajeFromPeliculaByIds(idPers, idPeli);
+		
+		return "Personaje con id: " + idPers + " eliminado de pelicula: " + idPeli;
 	}
 
 	/*-------------------------------------------------------------------------*/

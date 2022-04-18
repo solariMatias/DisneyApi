@@ -13,6 +13,8 @@ public interface PersonajeService {
 
 	public Personaje update(Long id, Personaje personaje);
 
+	public Personaje findByid(Long id);
+
 	public void delete(Long id);
 
 	public boolean exist(Long idDog);
@@ -24,4 +26,6 @@ public interface PersonajeService {
 	public List<PersonajeProjection> searchByEdad(int edad);
 
 	public List<PersonajeProjection> searchByIdPeliSerie(Long id);
+	
+
 }

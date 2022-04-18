@@ -10,12 +10,16 @@ import com.alkemy.DisneyApi.entity.Pelicula;
 import com.alkemy.DisneyApi.exception.ResourceNotFoundException;
 import com.alkemy.DisneyApi.projection.PeliculaProjection;
 import com.alkemy.DisneyApi.repository.PeliculaRepository;
+import com.alkemy.DisneyApi.repository.PersonajeRepository;
 
 @Service
 public class PeliculaServiceImplements implements PeliculaService {
 
 	@Autowired
 	PeliculaRepository peliRepo;
+
+	@Autowired
+	PersonajeRepository persRepo;
 
 	@Override
 	public List<Pelicula> listAll() {
@@ -92,6 +96,12 @@ public class PeliculaServiceImplements implements PeliculaService {
 	@Override
 	public Pelicula findById(Long id) {
 		return this.peliRepo.findById(id).orElse(null);
+	}
+
+	@Override
+	public void deletePersonajeFromPeliculaByIds(Long idPersonaje, Long idPelicula) {
+		Pelicula movie = this.findById(idPelicula);
+		this.persRepo.deleteAll(movie.getPersonajesEnPeliculaSerie());
 	}
 
 }

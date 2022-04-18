@@ -91,4 +91,9 @@ public class PersonajeServiceImplements implements PersonajeService {
 		return this.personajeRepo.findAllPersonaje();
 	}
 
+	@Override
+	public Personaje findByid(Long id) {
+		return this.personajeRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Personaje", "id", id));
+	}
+
 }

@@ -23,4 +23,6 @@ public interface PeliculaRepository extends CrudRepository<Pelicula, Long> {
 	public List<PeliculaProjection> findAllByOrderByFechaCreacionAsc();
 
 	public List<PeliculaProjection> findAllByOrderByFechaCreacionDesc();
+	
+	public void deleteByPersonajesEnPeliculaSerie_IdPersonaje(Long id);
 }

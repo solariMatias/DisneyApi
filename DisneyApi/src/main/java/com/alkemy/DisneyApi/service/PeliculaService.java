@@ -28,5 +28,7 @@ public interface PeliculaService {
 	public List<PeliculaProjection> orderByFechaDESC();
 
 	public List<PeliculaProjection> listAllPeliculaProjection();
+	
+	public void deletePersonajeFromPeliculaByIds(Long idPersonaje, Long idPelicula);
 
 }
