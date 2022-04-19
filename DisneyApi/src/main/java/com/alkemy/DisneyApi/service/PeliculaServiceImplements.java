@@ -17,10 +17,10 @@ import com.alkemy.DisneyApi.repository.PersonajeRepository;
 public class PeliculaServiceImplements implements PeliculaService {
 
 	@Autowired
-	PeliculaRepository peliRepo;
+	private PeliculaRepository peliRepo;
 
 	@Autowired
-	PersonajeRepository persRepo;
+	private PersonajeRepository persRepo;
 
 	@Override
 	public List<Pelicula> listAll() {

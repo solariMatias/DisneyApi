@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.alkemy.DisneyApi.entity.Pelicula;
 
-public class PersonajeDtos {
+public class PersonajeDto {
 
 	private Long idPersonaje;
 	private String imagen;

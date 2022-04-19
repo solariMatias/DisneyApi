@@ -15,7 +15,7 @@ import com.alkemy.DisneyApi.repository.PersonajeRepository;
 public class PersonajeServiceImplements implements PersonajeService {
 
 	@Autowired
-	PersonajeRepository personajeRepo;
+	private PersonajeRepository personajeRepo;
 
 	@Override
 	public List<Personaje> listAll() {

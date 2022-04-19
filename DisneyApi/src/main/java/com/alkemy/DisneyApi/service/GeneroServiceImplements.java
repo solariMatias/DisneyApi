@@ -12,7 +12,7 @@ import com.alkemy.DisneyApi.repository.GeneroRepository;
 public class GeneroServiceImplements implements GeneroService {
 
 	@Autowired
-	GeneroRepository generoRepo;
+	private GeneroRepository generoRepo;
 
 	@Override
 	public List<Genero> listAll() {

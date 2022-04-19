@@ -34,7 +34,9 @@ public class Pelicula {
 	private short calificacion;
 
 	@ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-	@JoinTable(name = "personajeEnPeliSeries", joinColumns = @JoinColumn(name = "idPeliculaSerie"), inverseJoinColumns = @JoinColumn(name = "idPersonaje"))
+	@JoinTable(name = "personajeEnPeliSeries", 
+		joinColumns = @JoinColumn(name = "idPeliculaSerie"), 
+		inverseJoinColumns = @JoinColumn(name = "idPersonaje"))
 	@JsonIgnore
 	private List<Personaje> personajesEnPeliculaSerie;
 

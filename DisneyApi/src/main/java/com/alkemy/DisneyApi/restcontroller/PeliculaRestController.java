@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alkemy.DisneyApi.dtos.PeliculaDtos;
+import com.alkemy.DisneyApi.dtos.PeliculaDto;
 
 import com.alkemy.DisneyApi.entity.Pelicula;
 
@@ -39,14 +39,14 @@ public class PeliculaRestController {
 
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/list-all")
-	public List<PeliculaDtos> listaPeliculaSerie() {
+	public List<PeliculaDto> listaPeliculaSerie() {
 		List<Pelicula> list = peliSrvc.listAll();
 		return list.stream().map(this::convertToDto).collect(Collectors.toList());
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/create")
-	public PeliculaDtos guardarPeliculaSerie(@RequestBody PeliculaDtos peliDto) throws ParseException {
+	public PeliculaDto guardarPeliculaSerie(@RequestBody PeliculaDto peliDto) throws ParseException {
 		Pelicula movie = convertToEntity(peliDto);
 		Pelicula movieCreated = peliSrvc.save(movie);
 		return convertToDto(movieCreated);
@@ -54,7 +54,7 @@ public class PeliculaRestController {
 
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/edit/{id}")
-	public PeliculaDtos editarPelicula(@PathVariable("id") Long id, @RequestBody Pelicula peli) {
+	public PeliculaDto editarPelicula(@PathVariable("id") Long id, @RequestBody Pelicula peli) {
 		return convertToDto(this.peliSrvc.update(id, peli));
 	}
 
@@ -109,12 +109,12 @@ public class PeliculaRestController {
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private PeliculaDtos convertToDto(Pelicula movie) {
-		PeliculaDtos movieDto = modelMapper.map(movie, PeliculaDtos.class);
+	private PeliculaDto convertToDto(Pelicula movie) {
+		PeliculaDto movieDto = modelMapper.map(movie, PeliculaDto.class);
 		return movieDto;
 	}
 
-	private Pelicula convertToEntity(PeliculaDtos movieDto) throws ParseException {
+	private Pelicula convertToEntity(PeliculaDto movieDto) throws ParseException {
 		Pelicula movie = modelMapper.map(movieDto, Pelicula.class);
 		if (movieDto.getId() != null) {
 			Pelicula oldMovie = peliSrvc.findById(movieDto.getId());

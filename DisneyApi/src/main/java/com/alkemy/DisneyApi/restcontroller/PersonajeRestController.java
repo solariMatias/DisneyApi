@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.alkemy.DisneyApi.dtos.PersonajeDtos;
+import com.alkemy.DisneyApi.dtos.PersonajeDto;
 
 import com.alkemy.DisneyApi.entity.Personaje;
 import com.alkemy.DisneyApi.projection.PersonajeProjection;
@@ -35,20 +35,20 @@ public class PersonajeRestController {
 
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/list-all")
-	public List<PersonajeDtos> listaPersonajes() {
+	public List<PersonajeDto> listaPersonajes() {
 		List<Personaje> list = this.persSrvc.listAll();
 		return list.stream().map(this::convertToDto).collect(Collectors.toList());
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
 	@PostMapping("/create")
-	public PersonajeDtos guardarPersonaje(@RequestBody Personaje personaje) {
+	public PersonajeDto guardarPersonaje(@RequestBody Personaje personaje) {
 		return convertToDto(this.persSrvc.save(personaje));
 	}
 
 	@ResponseStatus(HttpStatus.OK)
 	@PutMapping("/edit/{id}")
-	public PersonajeDtos editarPersonaje(@PathVariable("id") Long id, @RequestBody Personaje personaje) {
+	public PersonajeDto editarPersonaje(@PathVariable("id") Long id, @RequestBody Personaje personaje) {
 		return convertToDto(this.persSrvc.update(id, personaje));
 	}
 
@@ -78,8 +78,8 @@ public class PersonajeRestController {
 	}
 
 	/*-------------------------------------------------------------------------*/
-	private PersonajeDtos convertToDto(Personaje pers) {
-		PersonajeDtos persDto = modelMapper.map(pers, PersonajeDtos.class);
+	private PersonajeDto convertToDto(Personaje pers) {
+		PersonajeDto persDto = modelMapper.map(pers, PersonajeDto.class);
 		return persDto;
 	}
 	
