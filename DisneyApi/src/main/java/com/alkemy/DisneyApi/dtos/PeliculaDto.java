@@ -3,6 +3,7 @@ package com.alkemy.DisneyApi.dtos;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.alkemy.DisneyApi.entity.Genero;
 import com.alkemy.DisneyApi.entity.Personaje;
 
 public class PeliculaDto {
@@ -13,16 +14,8 @@ public class PeliculaDto {
 	private LocalDate fechaCreacion;
 	private short calificacion;
 	private List<Personaje> personajesEnPeliculaSerie;
+	private Genero genero;
 
-//
-//	public PeliculaSerieDtos(PeliculaSerie movie) {
-//		this.id = movie.getIdPeliculaSerie();
-//		this.imagen = movie.getImagen();
-//		this.titulo = movie.getTitulo();
-//		this.fechaCreacion = movie.getFechaCreacion();
-//		this.calificacion = movie.getCalificacion();
-//		this.personajesEnPeliculaSerie = movie.getPersonajesEnPeliculaSerie();
-//	}
 	public Long getId() {
 		return id;
 	}
@@ -69,6 +62,14 @@ public class PeliculaDto {
 
 	public void setPersonajesEnPeliculaSerie(List<Personaje> personajesEnPeliculaSerie) {
 		this.personajesEnPeliculaSerie = personajesEnPeliculaSerie;
+	}
+
+	public Genero getGenero() {
+		return genero;
+	}
+
+	public void setGenero(Genero genero) {
+		this.genero = genero;
 	}
 
 }

@@ -2,6 +2,7 @@ package com.alkemy.DisneyApi.entity;
 
 import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -27,7 +28,7 @@ public class Personaje {
 	private double peso;
 	private String historia;
 
-	@ManyToMany(mappedBy = "personajesEnPeliculaSerie")
+	@ManyToMany(mappedBy = "personajesEnPeliculaSerie",cascade = CascadeType.PERSIST)
 	@JsonIgnore
 	private List<Pelicula> peliculaSerie;
 

@@ -3,11 +3,13 @@ package com.alkemy.DisneyApi.service;
 import java.util.List;
 import java.util.Optional;
 
+import org.hibernate.DuplicateMappingException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alkemy.DisneyApi.entity.Pelicula;
 import com.alkemy.DisneyApi.entity.Personaje;
+import com.alkemy.DisneyApi.exception.DuplicatedItemException;
 import com.alkemy.DisneyApi.exception.ResourceNotFoundException;
 import com.alkemy.DisneyApi.projection.PeliculaProjection;
 import com.alkemy.DisneyApi.repository.PeliculaRepository;
@@ -60,7 +62,7 @@ public class PeliculaServiceImplements implements PeliculaService {
 
 	@Override
 	public List<PeliculaProjection> searchPeliculaByTitulo(String titulo) {
-		List<PeliculaProjection> list = this.peliRepo.findPeliculaByTitulo(titulo);
+		List<PeliculaProjection> list = this.peliRepo.findByTitulo(titulo);
 		if (!list.isEmpty()) {
 			return list;
 		} else {
@@ -100,23 +102,36 @@ public class PeliculaServiceImplements implements PeliculaService {
 
 	@Override
 	public void deletePersonajeFromMovie(Long idPersonaje, Long idPelicula) {
-		Optional<Pelicula> movie = peliRepo.findById(idPelicula);
-		Optional<Personaje> pers = persRepo.findById(idPersonaje);
 
-		movie.get().removePersonaje(pers.get());
-
-		this.peliRepo.save(movie.get());
-
+		Pelicula movie = peliRepo.findById(idPelicula)
+				.orElseThrow(() -> new ResourceNotFoundException("Pelicula", "id", idPelicula));
+		Personaje pers = persRepo.findById(idPersonaje)
+				.orElseThrow(() -> new ResourceNotFoundException("Personaje", "id", idPersonaje));
+		
+		if(movie.getPersonajesEnPeliculaSerie().contains(pers)) {
+			movie.removePersonaje(pers);
+			this.peliRepo.save(movie);
+		}else {
+			throw new ResourceNotFoundException("Personaje", "id_personaje", idPersonaje);
+		}
+		
 	}
 
 	@Override
 	public void addPersonajeOnMovie(Long idPersonaje, Long idPelicula) {
-		Optional<Pelicula> movie = peliRepo.findById(idPelicula);
-		Optional<Personaje> pers = persRepo.findById(idPersonaje);
-
-		movie.get().addPersonaje(pers.get());
-
-		this.peliRepo.save(movie.get());
+		Pelicula movie = peliRepo.findById(idPelicula)
+				.orElseThrow(() -> new ResourceNotFoundException("Pelicula", "id", idPelicula));
+		Personaje pers = persRepo.findById(idPersonaje)
+				.orElseThrow(() -> new ResourceNotFoundException("Personaje", "id", idPersonaje));
+		
+		if(movie.getPersonajesEnPeliculaSerie().contains(pers)) {
+			throw new DuplicatedItemException();
+		}else {
+			movie.addPersonaje(pers);
+			this.peliRepo.save(movie);
+		}
+		
+		
 	}
 
 }

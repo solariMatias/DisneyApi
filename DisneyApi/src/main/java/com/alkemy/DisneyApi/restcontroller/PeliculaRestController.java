@@ -1,6 +1,7 @@
 package com.alkemy.DisneyApi.restcontroller;
 
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -20,10 +21,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.alkemy.DisneyApi.dtos.PeliculaDto;
 
 import com.alkemy.DisneyApi.entity.Pelicula;
-
+import com.alkemy.DisneyApi.entity.Personaje;
 import com.alkemy.DisneyApi.projection.PeliculaProjection;
-
+import com.alkemy.DisneyApi.service.GeneroService;
 import com.alkemy.DisneyApi.service.PeliculaService;
+import com.alkemy.DisneyApi.service.PersonajeService;
 
 import org.modelmapper.ModelMapper;
 
@@ -37,6 +39,11 @@ public class PeliculaRestController {
 	@Autowired
 	private ModelMapper modelMapper;
 
+	@Autowired
+	private PersonajeService persSrvc;
+
+	@Autowired
+	private GeneroService generoSrvc;
 	@ResponseStatus(HttpStatus.OK)
 	@GetMapping("/list-all")
 	public List<PeliculaDto> listaPeliculaSerie() {
@@ -45,11 +52,18 @@ public class PeliculaRestController {
 	}
 
 	@ResponseStatus(HttpStatus.CREATED)
+
 	@PostMapping("/create")
 	public PeliculaDto guardarPeliculaSerie(@RequestBody PeliculaDto peliDto) throws ParseException {
 		Pelicula movie = convertToEntity(peliDto);
-		Pelicula movieCreated = peliSrvc.save(movie);
-		return convertToDto(movieCreated);
+		List<Personaje> list = new ArrayList<>();
+		for (Personaje p : peliDto.getPersonajesEnPeliculaSerie()) {
+			list.add(persSrvc.findByid(p.getIdPersonaje()));
+		}
+		movie.setPersonajesEnPeliculaSerie(list);
+		movie.setGenero(generoSrvc.findById(peliDto.getGenero().getIdGenero()));
+
+		return convertToDto(this.peliSrvc.save(movie));
 	}
 
 	@ResponseStatus(HttpStatus.OK)
@@ -59,7 +73,7 @@ public class PeliculaRestController {
 	}
 
 	@ResponseStatus(HttpStatus.OK)
-	@GetMapping("/delete/{id}")
+	@DeleteMapping("/delete/{id}")
 	public String eliminarPelicula(@PathVariable("id") Long id) {
 		this.peliSrvc.delete(id);
 		return "Pelicula con id  " + id + " eliminado";
