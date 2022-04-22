@@ -1,7 +1,15 @@
 # DisneyApi
 
+
+REQUERIMIENTOS:
+- Se encuentran en la carpeta del proyecto.
+
+
+
 DOCUMENTACION:
 https://documenter.getpostman.com/view/20286094/UyrADwA5
+
+
 
 NO INCLUYE:
 
