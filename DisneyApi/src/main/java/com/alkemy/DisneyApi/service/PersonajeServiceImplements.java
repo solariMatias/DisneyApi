@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.alkemy.DisneyApi.entity.Personaje;
+import com.alkemy.DisneyApi.exception.IncorrectDataInputException;
 import com.alkemy.DisneyApi.exception.ResourceNotFoundException;
 import com.alkemy.DisneyApi.projection.PersonajeProjection;
 import com.alkemy.DisneyApi.repository.PersonajeRepository;
@@ -24,8 +25,11 @@ public class PersonajeServiceImplements implements PersonajeService {
 
 	@Override
 	public Personaje save(Personaje personaje) {
+		verifyPersonajeData(personaje);
 		return personajeRepo.save(personaje);
 	}
+
+	
 
 	@Override
 	public Personaje update(Long id, Personaje personaje) {
@@ -96,4 +100,10 @@ public class PersonajeServiceImplements implements PersonajeService {
 		return this.personajeRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Personaje", "id", id));
 	}
 
+	private void verifyPersonajeData(Personaje personaje) {
+		if (personaje.getIdPersonaje() != null)
+			throw new IncorrectDataInputException("Personaje", "id_personaje");
+		if (!personaje.getPeliculaSerie().isEmpty())
+			throw new IncorrectDataInputException("Personaje", "list");
+	}
 }
