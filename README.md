@@ -1,6 +1,7 @@
 # DisneyApi
 
 
+
 REQUERIMIENTOS:
 - Se encuentran en la carpeta del proyecto.
 
@@ -8,7 +9,7 @@ REQUERIMIENTOS:
 
 DOCUMENTACION:
 https://documenter.getpostman.com/view/20286094/UyrADwA5
-
+Algo que no está en la documentación: se necesita un token de tipo Bearer para ejecutar todos los métodos excepto para el Login y SignUp de Usuarios
 
 
 NO INCLUYE:
