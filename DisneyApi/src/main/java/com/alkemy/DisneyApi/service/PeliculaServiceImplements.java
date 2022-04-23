@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 import com.alkemy.DisneyApi.entity.Pelicula;
 import com.alkemy.DisneyApi.entity.Personaje;
 import com.alkemy.DisneyApi.exception.DuplicatedItemException;
-import com.alkemy.DisneyApi.exception.IncorrectDataInputException;
 import com.alkemy.DisneyApi.exception.ResourceNotFoundException;
 import com.alkemy.DisneyApi.projection.PeliculaProjection;
 import com.alkemy.DisneyApi.repository.PeliculaRepository;
@@ -31,7 +30,6 @@ public class PeliculaServiceImplements implements PeliculaService {
 
 	@Override
 	public Pelicula save(Pelicula peliculaSerie) {
-		verifyPeliculaData(peliculaSerie);
 		return this.peliRepo.save(peliculaSerie);
 	}
 
@@ -135,9 +133,4 @@ public class PeliculaServiceImplements implements PeliculaService {
 		
 	}
 
-	private void verifyPeliculaData(Pelicula pelicula) {
-		if (pelicula.getIdPeliculaSerie() != null)
-			throw new IncorrectDataInputException("Pelicula", "id_personaje");
-		
-	}
 }
